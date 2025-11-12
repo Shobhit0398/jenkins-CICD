@@ -24,7 +24,7 @@ pipeline {
         SONAR_URL = "localhost:9000"
       }
       steps {
-        withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+        withCredentials([string(credentialsId: '4e0b44d2-0032-440b-9e3e-2747236d0d61', variable: 'SONAR_AUTH_TOKEN')]) {
           sh 'cd spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
         }
       }
