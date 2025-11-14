@@ -36,7 +36,6 @@ pipeline {
     }
 
     stage('Build and Push Docker Image') {
-      agent { label 'docker-host' } // Run this stage on a node with Docker CLI installed
       steps {
         withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
           sh '''
