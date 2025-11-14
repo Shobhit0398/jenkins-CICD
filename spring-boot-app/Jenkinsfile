@@ -36,12 +36,20 @@ pipeline {
     }
 
     stage('Build and Push Docker Image') {
+      environment {
+        DOCKER_IMAGE = "shobhitnagar71/ultimate-cicd:${BUILD_NUMBER}"
+      }
       steps {
         withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
           sh '''
             cd spring-boot-app
+            echo "Building Docker image ${DOCKER_IMAGE}..."
             docker build --platform linux/amd64 -t ${DOCKER_IMAGE} .
+
+            echo "Logging into Docker Hub..."
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
+            echo "Pushing Docker image ${DOCKER_IMAGE}..."
             docker push ${DOCKER_IMAGE}
           '''
         }
