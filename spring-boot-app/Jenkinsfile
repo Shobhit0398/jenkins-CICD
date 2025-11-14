@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'abhishekf5/maven-abhishek-docker-agent:v1'
-      args '--network=jenkins-cicd_cicd-net -v /var/jenkins_home/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock --add-host=registry-1.docker.io:8.8.8.8'
+      args '--network=host -v /var/jenkins_home/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
     }
   }
 
@@ -44,7 +44,7 @@ pipeline {
           sh '''
             cd spring-boot-app
             echo "Building Docker image ${DOCKER_IMAGE}..."
-            docker build --platform linux/amd64 -t ${DOCKER_IMAGE} .
+            docker build --network host --platform linux/amd64 -t ${DOCKER_IMAGE} .
 
             echo "Logging into Docker Hub..."
             echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
