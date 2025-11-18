@@ -64,8 +64,8 @@ pipeline {
       steps {
         withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
           sh '''
-            rm -rf spring-boot-app/target/
             git checkout .
+            rm -rf spring-boot-app/target/
             git config user.email "shobhit9803@gmail.com"
             git config user.name "Shobhit"
             BUILD_NUMBER=${BUILD_NUMBER}
